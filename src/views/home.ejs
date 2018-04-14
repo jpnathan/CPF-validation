@@ -1,1 +1,18 @@
-testesteste
+<% include ./header %>
+<section class="col-6">
+    <h1> Status </h1>
+    <div class="card">
+        <div class="card-body">
+            <ul>
+                <li> Status Servidor: </li>
+                <li> Tempo em Execução: </li>
+                <li> Quantidade de CPF cadastrados: </li>
+                <li> Quantidade de CPF na Blacklist: </li>
+            </ul>
+        </div>
+    </div>
+    <br>
+    <a href="/find" class="btn btn-primary"> Verificar CPF </a>
+    <a href="/block" class="btn btn-danger"> Bloquear CPF </a>
+</section>
+<% include ./footer %>

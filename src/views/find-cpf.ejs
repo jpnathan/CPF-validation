@@ -1,0 +1,39 @@
+<% include ./header %>
+<h1>Consult your CPF free...</h1>
+<div class="col-12" style="display:flex;">
+    <div class="form-group col-6">
+        <form>
+            <label for="cpf"></label>
+            <input type="text" class="form-control" id="cpf" name="cpf" aria-describedby="emailHelp" placeholder="Ex: 000.000.000-00"
+                pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" minlength="14" maxlength="14" autocomplete="off"
+                required title="Adicione seu CPF no formato correto: 123.456.789-10">
+            <small id="emailHelp" class="form-text text-muted">Please, put your CPF number.</small>
+            <br>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="block" name="Blacklist">
+                <label class="custom-control-label" for="block"> Bloquear este Cpf</label>
+            </div>
+        </form>
+    </div>
+    <div class="col-6" style=" margin-top: 22px; ">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <li>CPF:</li>
+                <li>Status:</li>
+                <p></p>
+                <a href="#" class="btn btn-success">Free It!</a>
+                <a href="#" class="btn btn-danger">Block It!</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-12" style=" margin-left: 15px;">
+    <div>
+        <a href="javascript:verifyCpf();" class="btn btn-primary"> Verificar </a>
+    </div>
+    <br>
+    <a href="/"> Voltar </a>
+    <a href="/block"> Bloquear Cpf </a>
+</div>
+
+<% include ./footer %>
