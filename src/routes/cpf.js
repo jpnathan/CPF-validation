@@ -21,4 +21,18 @@ route.post('/block', (req, res) => {
     });
 });
 
+route.post('/free', (req, res) => {
+    getCpf.freeCpf(req.body, (err, data) => {
+        if (err) res.send(err);
+        else res.send(data);
+    });
+});
+
+route.delete('/delele', (req, res) => {
+    getCpf.deleteCpf(req.body, (err, data) => {
+        if (err) res.send(err);
+        else res.send(data);
+    });
+});
+
 module.exports = route;
