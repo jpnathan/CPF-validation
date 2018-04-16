@@ -2,11 +2,10 @@
  * Controller for CPF validation and persistence
  */
 
-const Cpf = require('../model/cpf');
 const config = require('../config/')
 const cpf = require('node-cpf');
 const DataStore = require('nedb');
-
+// Setting db here
 const db = new DataStore({ filename: 'data.db', autoload: true });
 
 module.exports = {
@@ -107,7 +106,7 @@ module.exports = {
     generalStatus: async (param, callback) => {
         const status = {
             consults: config.totalConsults,
-            uptime: Date.now() - config.uptime,
+            uptime: process.uptime(),
             blacklist: 0
         }
 
