@@ -1,8 +1,8 @@
 <% include ./header %>
-<h1 class="col-12">Consult your CPF free...</h1>
-<div class="col-12" style="display:flex;">
+<h1 class="col-12 consult-title"><strong> Consult your CPF </strong></h1>
+<div class="col-12 main-content">
     <div class="form-group col-6">
-        <form>
+        <form id="cpf-form">
             <label for="cpf"></label>
             <input type="text" class="form-control" id="cpf" name="cpf" aria-describedby="emailHelp" placeholder="E.g: 000.000.000-00"
                 pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" minlength="14" maxlength="14" autocomplete="off"

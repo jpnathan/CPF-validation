@@ -1,10 +1,10 @@
 <% include ./header %>
 <section class="col-6">
-    <h1> Status </h1>
+    <h1> <strong> Status </strong> </h1>
     <div class="card">
         <div class="card-body">
             <ul>
-                <p> <strong> Server time execution: </strong> <span ><%= status.uptime %></span></p>
+                <p> <strong> Server time execution: </strong> <span ><%= status.uptime %> ms</span></p>
                 <p> <strong> Total of consults: </strong> <span> <%= status.consults %> </span></p>
                 <p> <strong> Total of blacklist: </strong> <span> <%= status.blacklist %> </span></p>
             </ul>

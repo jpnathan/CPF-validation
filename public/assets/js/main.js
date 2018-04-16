@@ -4,7 +4,18 @@ $(document).ready(function () {
     $(() => {
         $("#cpf").mask("999.999.999-99");
     });
+    
     $('#status_card').addClass('hidden');
+
+    if (window.innerWidth < 768) {
+        $('section.col-4').addClass('col-12').removeClass('col-4');
+        $('section.col-6').addClass('col-12').removeClass('col-6');
+        $('.form-group').removeClass('col-6').addClass('col-12');
+    };
+    
+    $("#cpf-form").submit(function (e) {
+        return false;
+    });   
 });
 
 function verifyCpf() {

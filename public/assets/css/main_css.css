@@ -1,3 +1,62 @@
+html, body {
+    height: 100%;
+    box-sizing: border-box;
+}
+
 .hidden {
     display: none;
+}
+
+.nav {
+    background: #2b87c7;
+}
+
+.nav a {
+    color: #FFF;
+}
+
+.header-container {
+    margin: 50px;
+}
+
+.footer {
+    background-color: rgba(155,155,155,0.3);
+    height: 60px;
+    position:absolute;
+    bottom:0;
+    width:100%;
+}
+
+.max-img {
+    width: 400px;
+    height: 100px;
+}
+
+.consult-title {
+    margin-left: 15px;
+}
+
+.main-content {
+    display:flex;
+}
+
+.alert-danger {
+    margin: 50px 0px 0px 25px;
+}
+
+@media (max-width: 768px) {
+    .max-img {
+        width: 250px;
+        height: 70px;
+    }
+
+    .main-content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .consult-title {
+        margin-left: 15px;
+        font-size: 26px;
+    }
 }
