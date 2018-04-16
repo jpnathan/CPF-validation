@@ -5,10 +5,6 @@ $(document).ready(function () {
         $("#cpf").mask("999.999.999-99");
     });
     $('#status_card').addClass('hidden');
-
-    if (location.pathname === '/') {
-        getStatus();
-    }
 });
 
 function verifyCpf() {
@@ -31,13 +27,23 @@ function verifyCpf() {
             $('#status_card').removeClass('hidden');
             $('#cpf').val("")
             $('.cpf_result').text(dataForm.cpf);
-            
-            if (result[0].block == true) {
+
+            if (result.block && result.block === true) {
                 $('.cpf_status').text('BLOCK');
                 $('.btn-danger').addClass('hidden');           
             } else {
                 $('.cpf_status').text('FREE');
                 $('.btn-success').addClass('hidden');
+            }
+
+            if (result[0] && result[0].block == true) {
+                $('.cpf_status').text('BLOCK');
+                $('.btn-danger').addClass('hidden');         
+                $('.btn-success').removeClass('hidden');         
+            } else {
+                $('.cpf_status').text('FREE');
+                $('.btn-success').addClass('hidden');
+                $('.btn-danger').removeClass('hidden');         
             }
         }
     });
@@ -46,7 +52,7 @@ function verifyCpf() {
 function blockCpf() {
     $.ajax({
         url: "http://localhost:3000/block",
-        type: "POST",
+        type: "PUT",
         dataType: 'json',
         data: dataForm
     }).then(result => {
@@ -66,7 +72,7 @@ function blockCpf() {
 function freeCpf() {
     $.ajax({
         url: "http://localhost:3000/free",
-        type: "POST",
+        type: "PUT",
         dataType: 'json',
         data: dataForm
     }).then(result => {
@@ -82,18 +88,6 @@ function freeCpf() {
         };
     });
 };
-
-function getStatus() {
-    $.ajax({
-        url: "http://localhost:3000/status",
-        type: "GET",
-        dataType: 'json',
-    }).then(result => {
-        $('.time').text(convertMilliToMin(result.uptime))
-        $('.consults').text(result.consults)
-        $('.blacklist').text(result.blacklist)
-    });
-}
 
 function convertMilliToMin(milliseconds) {
     const minutes = Math.floor(milliseconds / 60000);

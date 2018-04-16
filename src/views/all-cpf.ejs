@@ -1,0 +1,16 @@
+<% include ./header %>
+
+<section class="col-4">
+    <% cpfs.forEach(function(cpf) { %>
+        <div class="card">
+            <div class="card-body">
+                <p>
+                   <strong> CPF Number:  </strong> <%= cpf.cpf %> <br>
+                   <strong> Blacklist:  </strong> <%= cpf.block %>
+                </p>
+            </div>
+        </div>
+    <% }); %>
+</section>
+
+<% include ./footer %>

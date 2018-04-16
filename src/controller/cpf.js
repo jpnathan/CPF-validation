@@ -40,7 +40,6 @@ module.exports = {
             });
         } else
             return callback("Bad request. CPF is not valid. Try again!.", null);
-
     },
 
     // Unblock CPF
@@ -96,7 +95,7 @@ module.exports = {
             if (cpf.isMasked(param.cpf)) param.cpf = cpf.unMask(param.cpf);
 
             // Deleting from DB
-            await db.update({cpf: param.cpf}, {multi: true}, (err, numRemoved) => {
+            await db.remove({cpf: param.cpf}, {multi: true}, (err, numRemoved) => {
                 if (err) return callback("Bad request, try again", null);
                 else return callback(null, numRemoved);
             })
@@ -104,6 +103,7 @@ module.exports = {
             return callback("Bad request. CPF is not valid. Try again!.", null);
     },
 
+    // Return the status of services
     generalStatus: async (param, callback) => {
         const status = {
             consults: config.totalConsults,
@@ -115,7 +115,51 @@ module.exports = {
             if(err) callback("Bad request, there was a error in BD", null);
             
             status.blacklist = count;
-            callback(null, status);
+            return callback(null, status);
+        });
+    },
+
+    // Consult a CPF
+    cunsultCpf: async (param, callback) => {
+        // Plus consults
+        config.totalConsults++;
+
+        // If is a valid CPF, continue
+        if (cpf.validate(param.cpf)) {
+            // If CPF is masked, remove it
+            if (cpf.isMasked(param.cpf)) param.cpf = cpf.unMask(param.cpf);
+
+            // Find cpf in DB
+            await db.find({ cpf: param.cpf }, (err, data) => {
+                if (err) return callback("Bad request, try again", null);
+
+                // If found CPF in DB return it
+                if (data.length) {
+                    return callback(null, data);
+                }
+                else {
+                    return callback('CPF do not found in Database', null);
+                }
+            });
+        } else
+            return callback("Bad request. CPF is not valid. Try again!.", null);
+    },
+
+    // Return all CPF's from DB
+    getAllCpfs: async (param, callback) => {
+        // getting all data from DB
+        await db.find({}, (err, data) => {
+            if (err) return callback("Bad request, try again", null);
+            
+            // If has data, mask cpf and return it
+            if(data.length) {
+                data.forEach(element => {
+                    element.cpf = cpf.mask(element.cpf);
+                });
+
+                return callback(null, data);
+            } else
+                return callback({message: "Do not found cpf's registered."}, null);
         });
     }
 }
