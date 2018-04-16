@@ -4,6 +4,7 @@
 
 const express = require('express');
 const morgan = require('morgan');
+const bodyParser = require('body-parser');
 const config = require('./src/config');
 const { cpf, views } = require('./src/routes');
 const app = express();
@@ -12,6 +13,8 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', './src/views');
 app.use(express.static('public/'));
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 // Loading midlewares
 app.use(
