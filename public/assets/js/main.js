@@ -1,5 +1,16 @@
 let dataForm;
 
+$(document).ready(function () {
+    $(() => {
+        $("#cpf").mask("999.999.999-99");
+    });
+    $('#status_card').addClass('hidden');
+
+    if (location.pathname === '/') {
+        getStatus();
+    }
+});
+
 function verifyCpf() {
     dataForm = { 
         cpf: $('#cpf').val()
@@ -10,18 +21,25 @@ function verifyCpf() {
         dataType: 'json',
         data: dataForm
     }).then(result => {
-        $('#cpf').val("")
-        $('#status_card').removeClass('hidden');
-        $('.cpf_result').text(dataForm.cpf);
-
-        if (result[0].block == true) {
-            $('.cpf_status').text('BLOCK');
-            $('.btn-danger').addClass('hidden')            
-        } else {
-            $('.cpf_status').text('FREE');
-            $('.btn-success').addClass('hidden')
+        if (typeof result === 'string') {
+            $('#status_card').addClass('hidden');
+            $('.alert-danger').text(result);
+            $('.alert-danger').removeClass('hidden');
         }
-        console.log(result);
+        else {
+            $('.alert-danger').addClass('hidden');
+            $('#status_card').removeClass('hidden');
+            $('#cpf').val("")
+            $('.cpf_result').text(dataForm.cpf);
+            
+            if (result[0].block == true) {
+                $('.cpf_status').text('BLOCK');
+                $('.btn-danger').addClass('hidden');           
+            } else {
+                $('.cpf_status').text('FREE');
+                $('.btn-success').addClass('hidden');
+            }
+        }
     });
 };
 
@@ -32,7 +50,16 @@ function blockCpf() {
         dataType: 'json',
         data: dataForm
     }).then(result => {
-        console.log(result);        
+        if (typeof result === 'string') {
+            $('.alert-danger').text(result)
+            $('.alert-danger').removeClass('hidden')
+        }
+        else {
+            $('.cpf_status').text('BLOCK');
+            $('.cpf_status').css({color: 'red'});
+            $('.btn-success').removeClass('hidden');
+            $('.btn-danger').addClass('hidden');
+        };
     });
 };
 
@@ -43,13 +70,33 @@ function freeCpf() {
         dataType: 'json',
         data: dataForm
     }).then(result => {
-        console.log('result free', result);
+        if (typeof result === 'string') {
+            $('.alert-danger').text(result)
+            $('.alert-danger').removeClass('hidden')
+        }
+        else {
+            $('.cpf_status').text('FREE');
+            $('.cpf_status').css({color: 'green'});
+            $('.btn-success').addClass('hidden');
+            $('.btn-danger').removeClass('hidden');
+        };
     });
 };
 
-$(document).ready(function() {
-    $(() => {
-        $("#cpf").mask("999.999.999-99");
+function getStatus() {
+    $.ajax({
+        url: "http://localhost:3000/status",
+        type: "GET",
+        dataType: 'json',
+    }).then(result => {
+        $('.time').text(convertMilliToMin(result.uptime))
+        $('.consults').text(result.consults)
+        $('.blacklist').text(result.blacklist)
     });
-    $('#status_card').addClass('hidden');
-});
+}
+
+function convertMilliToMin(milliseconds) {
+    const minutes = Math.floor(milliseconds / 60000);
+    const seconds = ((milliseconds % 60000) / 1000).toFixed(0);
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+};

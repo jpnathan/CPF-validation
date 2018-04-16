@@ -3,6 +3,7 @@
  */
 
 const Cpf = require('../model/cpf');
+const config = require('../config/')
 const cpf = require('node-cpf');
 const DataStore = require('nedb');
 
@@ -12,7 +13,10 @@ module.exports = {
 
     // Consult CPF into our DB
     verifyCpf: async (param, callback) => {
-            // If is a valid CPF, continue
+        // Plus consults
+        config.totalConsults++;
+
+        // If is a valid CPF, continue
         if (cpf.validate(param.cpf)) {
             // If CPF is masked, remove it
             if (cpf.isMasked(param.cpf)) param.cpf = cpf.unMask(param.cpf);
@@ -20,6 +24,7 @@ module.exports = {
             // Find cpf in DB
             await db.find({ cpf: param.cpf }, (err, data) => {
                 if(err) return callback("Bad request, try again", null)
+                
                 // If found CPF in DB return it
                 if (data.length) {
                     return callback(null, data);
@@ -40,6 +45,9 @@ module.exports = {
 
     // Unblock CPF
     freeCpf: async (param, callback) => {
+        // Plus consults
+        config.totalConsults++;
+
         // If is a valid CPF, continue
         if (cpf.validate(param.cpf)) {
             // If CPF is masked, remove it
@@ -58,6 +66,9 @@ module.exports = {
     
     // Unblock CPF
     blockCpf: async (param, callback) => {
+        // Plus consults
+        config.totalConsults++;
+
         // If is a valid CPF, continue
         if (cpf.validate(param.cpf)) {
             // If CPF is masked, remove it
@@ -76,6 +87,9 @@ module.exports = {
 
     // Delete CPF from DB
     deleteCpf: async (param, callback) => {
+        // Plus consults
+        config.totalConsults++;
+
         // If is a valid CPF, continue
         if (cpf.validate(param.cpf)) {
             // If CPF is masked, remove it
@@ -88,5 +102,20 @@ module.exports = {
             })
         } else
             return callback("Bad request. CPF is not valid. Try again!.", null);
+    },
+
+    generalStatus: async (param, callback) => {
+        const status = {
+            consults: config.totalConsults,
+            uptime: Date.now() - config.uptime,
+            blacklist: 0
+        }
+
+        await db.count({ block: true }, (err, count) => {
+            if(err) callback("Bad request, there was a error in BD", null);
+            
+            status.blacklist = count;
+            callback(null, status);
+        });
     }
 }

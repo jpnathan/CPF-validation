@@ -1,30 +1,14 @@
-import {express} from "express";
+"use strict";
 
-// const express = require('express')
-// const load = require('express-load')
-// const bodyParser = require('body-parser')
-// const expressValidator = require('express-validator')
-// const morgan = require('morgan')
+/**
+ * Exports configuration
+ */
 
-module.exports = function () {
-    const app = express();
+// Environment Constants
+const home = process.env.MM_HOME;
+const environment = process.env.MM_ENVIRONMENT;
 
-    app.set('view engine', 'ejs')
-    app.set('views', './app/views')
-
-    app.use(express.static('public'));
-    app.use(morgan('dev'));
-    app.use(bodyParser.urlencoded({ extended: true }))
-    app.use(expressValidator())
-
-    load('routes', { cwd: 'app' })
-        .then('infra')
-        .into(app)
-
-    app.use((req, res, next) => {
-        res.status(404).render('errorpage.ejs')
-        next()
-    })
-
-    return app
-}
+module.exports = {
+    totalConsults: 0,
+    uptime: Date.now()
+};

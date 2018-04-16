@@ -5,9 +5,9 @@
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-
-const app = express();
+const config = require('./src/config');
 const { cpf, views } = require('./src/routes');
+const app = express();
 
 // Loading template settings
 app.set('view engine', 'ejs');
@@ -29,5 +29,5 @@ app.use(
 
 app.listen(3000, (err) => {
     if (err) console.log(err);
-    else console.log(`flying on port 3000 now...`);
+    else console.log(`flying on port 3000 now...${config.uptime}`);
 });
