@@ -20,7 +20,7 @@
 Follow the steps to run the project:
 
 - [Clone repository or download it.](https://github.com/jpnathan/mm_challenge)
-- Go to the folde `cd mm_challenge`
+- Go to the folder `cd mm_challenge`
 - Create/build the container `sudo docker build -t mm_challenge .`
 - Run container with `sudo docker run -it -p 3000:3000 -d mm_challenge`
 - See the app [here](http://localhost:3000)
