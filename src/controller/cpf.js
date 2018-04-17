@@ -28,7 +28,7 @@ module.exports = {
                 if (data.length) {
                     return callback(null, data);
                 } else {
-                    //  Setting block to false as default on DB insert
+                    // Setting block to false as default on DB insert
                     param.block = false;
                     // If CPF not found, insert it into DB
                     db.insert(param, (err, data) => {
@@ -54,9 +54,10 @@ module.exports = {
             // Find CPF in DB and unblocking it
             await db.update({ cpf: param.cpf }, { $set: { block: false } }, { returnUpdatedDocs: true, multi: false }, (err, numAffected, affectedDocuments, upsert) => {
                 if (err) return callback("Bad request, try again", null)
-                else {
-                    return callback(null, affectedDocuments);
-                };
+                
+                // If do not found CPF return
+                if (numAffected === 0) return callback("CPF not found", null);                
+                else return callback(null, affectedDocuments);
             });
         } else
             return callback("Bad request. CPF is not valid. Try again!.", null);
@@ -74,10 +75,11 @@ module.exports = {
 
             // Find CPF in DB and blocking it
             await db.update({ cpf: param.cpf }, { $set: { block: true } }, { returnUpdatedDocs: true, multi: false }, (err, numAffected, affectedDocuments, upsert) => {
-                if (err) return callback("Bad request, try again", null)
-                else {
-                    return callback(null, affectedDocuments);
-                };
+                if (err) return callback("Bad request, try again", null);
+                
+                // If do not found CPF return
+                if (numAffected === 0) return callback("CPF not found", null);
+                else return callback(null, affectedDocuments);
             });
         } else 
             return callback("Bad request. CPF is not valid. Try again!.", null);

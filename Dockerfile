@@ -1,8 +1,9 @@
 FROM node:8
 
-RUN mkdir /var/www
 WORKDIR /var/www
-
-RUN npm install pm2@latest -g
-RUN npm intall
-RUN pm2 start index.js
+COPY package*.json ./
+RUN npm install pm2 -g
+CMD ["pm2-runtime", "index.js"]
+RUN npm install
+COPY . .
+RUN pm2 start index.js && /bin/bash
