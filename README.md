@@ -1,4 +1,7 @@
 <p align="center">
+    <a href="https://www.maxmilhas.com.br/">
+    <img src="https://assets.maxmilhas.com.br/f0c0c10e7e14/site/img/logo.png" alt="MaxMilhas Challenge" height=72>
+  </a>
   <h1 align="center">MaxMilhas Challenge</h1>
   <p align="center">
     API for CPF register, validation of mask, and others resources.
@@ -17,16 +20,13 @@
 Follow the steps to run the project:
 
 - [Clone repository or download it.](https://github.com/jpnathan/mm_challenge)
-- Create/build the container `sudo docker build -t jpnathan/mm_challenge .`
-- Run container with `sudo docker run -it -p 3000:3000 -d jpnathan/mm_challenge`
-- Execute container with `sudo docker exec -it mm_challenge bash`
-- Install with: `npm install`
-- Go to the right folder `cd var/www`
-- pm2 start index.js
+- Create/build the container `sudo docker build -t mm_challenge .`
+- Run container with `sudo docker run -it -p 3000:3000 -d mm_challenge`
+- See the app [here](http://localhost:3000)
 
 ## Structure of the project
 
-After Downloado it, that is what you will see:
+After download it, that is what you will see:
 ```
 mm_challenge/
 └── public/
@@ -52,7 +52,6 @@ mm_challenge/
 │   |   ├── views.js
 └─── test
 |   ├── cpf-test.js
-├── .dockerignore
 ├── .gitignore
 ├── Dockerfile
 ├── package-lock.json
