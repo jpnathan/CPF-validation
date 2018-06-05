@@ -1,7 +1,7 @@
-<p align="center">
-    <a href="https://www.maxmilhas.com.br/">
-    <img src="https://assets.maxmilhas.com.br/f0c0c10e7e14/site/img/logo.png" alt="MaxMilhas Challenge" height=72>
-  </a>
+[comment]: <> (<p align="center">)
+    [comment]: <> (<a href="https://www.maxmilhas.com.br/">)
+    [comment]: <> (<img src="https://assets.maxmilhas.com.br/f0c0c10e7e14/site/img/logo.png" alt="MaxMilhas Challenge" height=72>)
+  [comment]: <> (</a>)
   <h1 align="center">MaxMilhas Challenge</h1>
   <p align="center">
     API for CPF register, validation of mask, and others resources.
